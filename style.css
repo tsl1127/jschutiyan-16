@@ -1,0 +1,92 @@
+*{margin: 0;padding: 0;}  /*所有的距离删掉*/
+a{text-decoration: none;}
+kbd{      /*kbd是个内联元素*/
+    border:1px solid red;
+    width:4em;/*不到万不得已不设置宽高*/
+    height: 4em;
+    display: inline-block;/*kbd是个内联元素，这里要变成块级*/
+    text-transform: uppercase;/*将小写字母变为大写*/
+    position: relative;
+}
+
+kbd > button{
+    position: absolute;
+    right:0px;
+    bottom:0px;  /*让出现在又下角*/
+    display: none;/*默认显示，hover的时候再显示*/
+}
+
+kbd:hover > button{
+    display: inline-block;
+}
+
+body{
+    background: #726E6E url(./wallhaven-18445-min.jpg) no-repeat center center;
+    height: 100vh;  /*占满整个屏幕*/
+    background-size: cover  /*背景图自适应*/
+}
+
+main{
+    text-align: center;
+    display: flex;
+    justify-content: center;/*水平居中*/
+    align-items: center;/*垂直居中*/
+    height: 100vh;
+}
+
+#zhangsan {
+    display: inline-block;
+}
+
+#zhangsan > div:nth-child(2) {
+    margin-left: -13px;     /*移动位置*/
+}
+
+#zhangsan > div:nth-child(3) {
+    margin-left: -78px;    /*移动位置*/
+}
+
+
+
+
+.key {
+    width:50px;
+    height: 40px;
+    background: radial-gradient(ellipse at center, #292929 0%,#111111 100%);
+    border:1px solid #373737;
+    color: #c5c5c5;
+    border-radius: 7px;
+    box-shadow: 0px 0px 0px 1px #1a1b1c, 0px 0px 0px 2px #1f2020,0px 3px 0px 2px #080808; 
+    /* display: inline-flex;
+    align-items: center;
+    justify-content: center; */
+    font-size: 16px;  /*字大小*/
+    font-family: Helvetica;
+    position: relative;
+
+}    
+
+.key .text {
+    position: absolute;
+    left:4px;
+    top:2px;
+}
+
+.key img {
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    left:4px;
+    bottom: 2px;
+}
+
+.row {
+    margin: 15px;  /*键盘加上下间隔*/
+}
+
+.row  .key {
+    margin: 0 7px;  /*键盘加左右间隔*/
+}
+
+
+

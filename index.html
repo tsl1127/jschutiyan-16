@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>我的导航</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+        <head></head>
+        <main>
+            <!-- <kbd class='key'>A</kbd> -->
+            <div class="wrapper"  id="zhangsan">
+
+            </div>
+
+        </main>
+        <footer></footer>
+        <script>
+                    //1.初始化数据
+
+                    var hashA = init()
+                    var keys = hashA['keys']
+                    var hash = hashA['hash']
+            
+                    //2.生成键盘      
+                    //遍历keys，生成kbd标签
+                    generateKeyboard(keys,hash)
+
+                    //3.监听用户动作
+                    listenToUser(hash)
+
+            
+            
+            //下面是私有的函数
+
+
+            function init(){
+                        var keys={
+                        0:['q','w','e','r','t','y','u','i','o','p'],   //数组里面有数组
+                        1:['a','s','d','f','g','h','j','k','l'],
+                        2:['z','x','c','v','b','n','m'],
+                        length:3
+                    }
+
+                    var hash={
+                        q:'qzone.qq.com',
+                        w:'weibo.com',
+                        e:'ele.me',
+                        r: undefined,
+                        t:'taobao.com',
+                        y:'yahoo.cn',
+                        u:'uc.cn',
+                        i:'iqiyi.com',
+                        o:'opera.com',
+                        p: undefined,
+                        a:'acfun.tv',
+                        s:'sohu.com',
+                        d:'douyu.com',
+                        f: undefined,
+                        g:'github.com',
+                        h: undefined,
+                        j:'jd.com',
+                        k: undefined,
+                        l: undefined,               
+                        z:'zhihu.com',
+                        x:'xin.com',
+                        c:'ctrip.com',
+                        v:'vip.com',
+                        b:'bilibili.com',
+                        n: 'nba.hupu.com',
+                        m:'mi.com'
+
+                    }
+                    //取出localStorage中的zzz对应的hash
+                    var  hashInLocalStorage = getFromLocalStorage('zzz')
+
+                        if(hashInLocalStorage){
+                            hash = hashInLocalStorage
+                        }
+                        return {
+                            "keys" : keys,
+                            "hash" : hash
+                        }
+            }
+
+            function getFromLocalStorage (name) {
+               return JSON.parse(localStorage.getItem(name)||'null')
+            }
+
+            function tag (tagName){
+                return document.createElement(tagName)
+            }
+
+            function createSpan (textContent){
+                var span = tag('span')
+                    span.textContent=textContent
+                    span.className = 'text'
+                    return span
+            }
+
+            function createButton (id ){
+                                        
+                    var buttonX = tag('button')
+                    buttonX.textContent = '编辑'
+                    buttonX.id = id
+                    buttonX.onclick = function(cde){   /*button被按动时，就执行function里的代码*/
+                        var button2 = cde['target']   
+                        var img2 = button2.previousSibling
+                        var  key = button2['id'] /*q w e r t */
+                        var  x =  prompt('给我一个网址')  /*弹出输入窗口，让用户输入的网址给x*/
+                        hash[key] = x  /*把网址给hash里的值*/   /*hash变更*/
+                        // console.log(x)
+                        img2.src = 'http://'+ x +'/favicon.ico'
+                        img2.onerror = function(xxx){
+                        xxx.target.src = '//i.loli.net/2017/11/29/5a1ea508c1e53.png'  //如果从网站获取icon失败之后的处理方式
+                    }
+
+                        localStorage.setItem('zzz',JSON.stringify(hash))  /*只要hash变更，则就存在uuu里*/
+                }
+                        return buttonX
+            }
+
+
+            function createImage (domain){
+                var imgxx = tag('img')                      
+                    if(domain){
+                        imgxx.src = 'http://'+domain+'/favicon.ico'
+                    }
+                    else{
+                        imgxx.src = '//i.loli.net/2017/11/29/5a1ea508c1e53.png'
+                    }
+
+                    imgxx.onerror = function(xxx){
+                        xxx.target.src = '//i.loli.net/2017/11/29/5a1ea508c1e53.png'  //如果从网站获取icon失败之后的处理方式
+                    }
+                    return imgxx
+            }
+            
+
+            function generateKeyboard(keys,hash){
+            for (var index = 0; index<keys['length']; index = index+1){ 
+                var div1 = tag('div')
+                div1.className='row'
+
+                zhangsan.appendChild(div1)  //生成一个儿子
+
+                var row = keys[index] //第一数组 第二个数组 第三个数组
+
+                for(var index2 = 0; index2<row['length']; index2 = index2+1){                   
+
+                    var span = createSpan(row[index2])
+                                        
+                    var buttonX = createButton(row[index2])
+
+                    var imgxx = createImage(hash[row[index2]])                  
+
+                    var  z = tag('kbd')
+                    z.className='key' //将key样式赋值给每一个z   
+
+                    z.appendChild(span)           
+                    z.appendChild(imgxx)
+                    z.appendChild(buttonX)  
+                    
+                    div1.appendChild(z)
+                }
+            
+            }
+        }
+
+        function listenToUser(hash){
+                document.onkeypress = function(abc){     //这里别监听错了
+                var key = abc['key']  //知道用户按了什么键
+                var website = hash[key]  //根据按键拿出对应的网站
+                // location.href = 'https://'+website //当前地址栏的地址
+                window.open('http://'+website,'_blank') //新开一个窗口打开页面    
+            }
+            }
+
+        </script>
+</body>
+</html>
